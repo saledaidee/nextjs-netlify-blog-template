@@ -14,7 +14,7 @@ import YouTube from "react-youtube";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 
 import imageSize from "rehype-img-size";
-import ExportedImage, {ExportedImageProps} from "next-image-export-optimizer";
+import ExportedImage, { ExportedImageProps } from "next-image-export-optimizer";
 
 const Image = ({ src, alt, height, width, title }) => {
   const imageProps: ExportedImageProps = {
@@ -24,7 +24,10 @@ const Image = ({ src, alt, height, width, title }) => {
     width,
     title,
     layout: "responsive",
-    loading: "lazy"
+    placeholder: "blur",
+    sizes: "70vw",
+    priority: true,
+    blurDataURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8dOjcfwAH8wNTNwVyhAAAAABJRU5ErkJggg=="
   }
   return <ExportedImage {...imageProps} />
 }
@@ -84,9 +87,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { content, data } = matter(source, {
     engines: { yaml: (s) => yaml.load(s, { schema: yaml.JSON_SCHEMA }) as object }
   });
-  const mdxSource = await renderToString(content, { 
-    components, 
-    scope: data, 
+  const mdxSource = await renderToString(content, {
+    components,
+    scope: data,
     mdxOptions: {
       rehypePlugins: [[imageSize, { dir: "public" }]]
     }
