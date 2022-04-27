@@ -13,6 +13,22 @@ import InstagramEmbed from "react-instagram-embed";
 import YouTube from "react-youtube";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 
+import imageSize from "rehype-img-size";
+import NextImage, { ImageProps } from "next/image"
+
+const Image = ({ src, alt, height, width, title }) => {
+  const imageProps: ImageProps = {
+    src,
+    alt,
+    height,
+    width,
+    title,
+    layout: "responsive",
+    loading: "lazy"
+  }
+  return <NextImage {...imageProps} />
+}
+
 export type Props = {
   title: string;
   dateString: string;
@@ -23,7 +39,7 @@ export type Props = {
   source: MdxRemote.Source;
 };
 
-const components = { InstagramEmbed, YouTube, TwitterTweetEmbed };
+const components = { InstagramEmbed, YouTube, TwitterTweetEmbed, img: Image };
 const slugToPostContent = (postContents => {
   let hash = {}
   postContents.forEach(it => hash[it.slug] = it)
@@ -68,7 +84,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { content, data } = matter(source, {
     engines: { yaml: (s) => yaml.load(s, { schema: yaml.JSON_SCHEMA }) as object }
   });
-  const mdxSource = await renderToString(content, { components, scope: data });
+  const mdxSource = await renderToString(content, { 
+    components, 
+    scope: data, 
+    mdxOptions: {
+      rehypePlugins: [[imageSize, { dir: "public" }]]
+    }
+  });
   return {
     props: {
       title: data.title,
