@@ -14,10 +14,10 @@ import YouTube from "react-youtube";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 
 import imageSize from "rehype-img-size";
-import NextImage, { ImageProps } from "next/image"
+import ExportedImage, {ExportedImageProps} from "next-image-export-optimizer";
 
 const Image = ({ src, alt, height, width, title }) => {
-  const imageProps: ImageProps = {
+  const imageProps: ExportedImageProps = {
     src,
     alt,
     height,
@@ -26,7 +26,7 @@ const Image = ({ src, alt, height, width, title }) => {
     layout: "responsive",
     loading: "lazy"
   }
-  return <NextImage {...imageProps} />
+  return <ExportedImage {...imageProps} />
 }
 
 export type Props = {

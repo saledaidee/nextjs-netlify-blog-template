@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "export": "next build && next export -o ./dist",
+    "export": "next build && next export -o ./dist && next-image-export-optimizer",
     "test": "jest"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "gray-matter": "^4.0.2",
     "js-yaml": "^4.0.0",
     "next": "12",
+    "next-image-export-optimizer": "^0.9.6",
     "next-mdx-remote": "^2.1.3",
     "normalize.css": "^8.0.1",
     "react": "^18.1.0",
