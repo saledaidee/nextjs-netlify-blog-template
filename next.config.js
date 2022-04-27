@@ -16,4 +16,9 @@ module.exports = ({
     );
     return config;
   },
+  swcMinify: true,
+  images: {
+    domains: ['images.unsplash.com'],
+    formats: ["image/webp"]
+  },
 });
